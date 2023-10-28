@@ -195,8 +195,9 @@ class noobService extends Plugin {
     }
     setTimeout(this.部署集市列表, 1000 * 60 * 60);
   }
-  遍历并更新服务列表(servicies) {
-    Object.getOwnPropertyNames(servicies).forEach(async (name) => {
+  async 遍历并更新服务列表(servicies) {
+    const serviceNames = Object.getOwnPropertyNames(servicies);
+    for (let name of serviceNames) {
       const repo = servicies[name];
       const repoMeta = await (
         await fetch(
@@ -224,7 +225,7 @@ class noobService extends Plugin {
       }
       if (needUpdate) {
         console.log(`集市包${name}需要重新拉取:`);
-
+  
         const releasePath = `https://api.github.com/repos/${repo}/releases/latest`;
         const releaseMeta = await (await fetch(releasePath)).json();
         const packagePath = releaseMeta.assets.find((asset) => {
@@ -236,11 +237,11 @@ class noobService extends Plugin {
         let file = new File([blob], name, {
           lastModified: Date.now(),
         });
-
+  
         const tempPackageZipPath = tempPackagePath + ".zip";
         if (await 思源工作空间.exists(tempPackagePath)) {
           console.log("正在删除旧集市包:", tempPackagePath);
-
+  
           await 思源工作空间.removeFile(tempPackagePath);
         }
         await 思源工作空间.writeFile(file, tempPackageZipPath);
@@ -253,9 +254,9 @@ class noobService extends Plugin {
           );
         }, 1000);
       }
-    });
+    }
   }
-  requireDep(id) {
+    requireDep(id) {
     return window.require(path.join(this.依赖路径, id));
   }
   requireModule(id) {
