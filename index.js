@@ -1,6 +1,6 @@
 const { Plugin } = require("siyuan");
 const clientApi = require("siyuan");
-/*上面这堆东西在插件初始化之后就可以用了*/ 
+/*上面这堆东西在插件初始化之后就可以用了*/
 let path;
 let 思源工作空间;
 let 插件自身路径;
@@ -10,48 +10,48 @@ let plugin;
 let 核心api;
 const workspaceDir = window.siyuan.config.system.workspaceDir;
 //通过思源工作空间的内部路径来获取绝对路径
-function 获取内部路径绝对路径(内部路径){
-  return path.join(workspaceDir,内部路径)
+function 获取内部路径绝对路径(内部路径) {
+  return path.join(workspaceDir, 内部路径)
 }
 //@todo:判定某个绝对路径是否在某个思源工作空间下面
-async function 是否工作空间子路径(绝对路径){
+async function 是否工作空间子路径(绝对路径) {
   let 思源工作空间列表 = await 核心api.getWorkspaces()
 
-  let 是子路径 = false 
-  for await (let 工作空间信息 of 思源工作空间列表){
-      let 工作空间根路径 = 工作空间信息.path 
-      let 正规绝对路径 = 绝对路径.replace(/\\/g,'/')
-      if(正规绝对路径.startsWith(工作空间路径)){
-        是子路径=true
-      }
+  let 是子路径 = false
+  for await (let 工作空间信息 of 思源工作空间列表) {
+    let 工作空间根路径 = 工作空间信息.path
+    let 正规绝对路径 = 绝对路径.replace(/\\/g, '/')
+    if (正规绝对路径.startsWith(工作空间路径)) {
+      是子路径 = true
     }
+  }
   return 是子路径
 }
 
 
 /*这些东西其实本来应该是插件的方法,但是不想让插件代码太长,所以把其他插件可能也需要代码拖出来放到这里*/
-/*插件的依赖路径指向node_modules*/  
-function requireDep(){
+/*插件的依赖路径指向node_modules*/
+function requireDep() {
   return window.require(path.join(plugin.依赖路径, id));
-} 
-function requirePluginModule(){
+}
+function requirePluginModule() {
   return window.require(path.join(plugin.插件自身路径, id));
 }
 /*这个东西是一个集市客户端,远程的集市服务器需要实现与思源集市兼容的接口*/
 class bazzarClient {
-  constructor(远程集市服务器地址){
+  constructor(远程集市服务器地址) {
     this.远程集市服务器地址 = 远程集市服务器地址
   }
   InstalledPlugins
-} 
+}
 
 /*这个东西是一个集市服务器,用于提供第三方集市服务*/
-class bazzarServer{
-  constructor(){
-    
+class bazzarServer {
+  constructor() {
+
   }
 }
-/*在插件初始化之后,path才可以使用*/ 
+/*在插件初始化之后,path才可以使用*/
 class noobService extends Plugin {
   onload() {
     if (window.require) {
@@ -115,7 +115,7 @@ class noobService extends Plugin {
     <path d="M868.352 635.904V386.048c34.304-6.144 61.952-38.4 61.952-74.752 0-42.496-34.304-74.752-74.752-74.752-21.504 0-42.496 10.752-55.296 25.6l-213.504-119.296c2.048-6.144 4.096-12.8 4.096-21.504 0-42.496-34.304-74.752-74.752-74.752s-74.752 34.304-74.752 74.752c0 6.144 2.048 12.8 2.048 19.456L230.4 262.656c-16.896-16.896-36.352-27.648-57.344-27.648-42.496 0-74.752 34.304-74.752 74.752 0 36.352 25.6 66.048 59.904 74.752v251.904c-34.304 8.704-59.904 38.4-59.904 74.752 0 42.496 34.304 74.752 74.752 74.752 21.504 0 42.496-10.752 55.296-25.6l215.552 119.296c-4.096 8.704-6.144 19.456-6.144 29.696 0 42.496 34.304 74.752 74.752 74.752s74.752-34.304 74.752-74.752c0-10.752-2.048-21.504-6.144-31.744l215.552-117.248c14.848 14.848 34.304 25.6 57.344 25.6 42.496 0 74.752-34.304 74.752-74.752 1.536-39.424-24.064-69.12-60.416-75.264z m-309.248 212.992c-8.704-6.144-16.896-10.752-25.6-12.8v-189.952h-36.352v189.952c-10.752 2.048-21.504 8.704-29.696 14.848l-219.648-121.856c2.048-6.144 2.048-12.8 2.048-19.456 0-34.304-23.552-64-55.296-72.704V384c12.8-4.096 23.552-8.704 31.744-19.456l159.744 98.304 19.456-29.696-160.256-98.304c2.048-8.704 4.096-14.848 4.096-23.552 0-6.144-2.048-12.8-2.048-19.456L460.8 170.496c12.8 14.848 34.304 23.552 55.296 23.552 21.504 0 40.448-8.704 53.248-23.552l213.504 121.856c-2.048 6.144-2.048 12.8-2.048 19.456 0 8.704 2.048 14.848 4.096 23.552l-159.744 98.304 19.456 29.696 157.696-96.256c8.704 8.704 19.456 14.848 31.744 19.456V640c-31.744 8.704-53.248 38.4-53.248 72.704 0 6.144 0 12.8 2.048 16.896l-223.744 119.296z" fill="#2B85FB" p-id="3731"></path><path d="M443.392 583.68c38.4 38.4 100.352 38.4 138.752 0s38.4-100.352 0-138.752-100.352-38.4-138.752 0c-38.4 37.888-38.4 100.352 0 138.752z"></path>
     </symbol>`);
   }
-  /*使用sfc-loader来从源文件加载界面组件*/ 
+  /*使用sfc-loader来从源文件加载界面组件*/
   async 初始化vue() {
     Vue = await import("/plugins/noobService/static/vue.js");
     console.log(Vue);
@@ -189,66 +189,71 @@ class noobService extends Plugin {
         JSON.stringify(servicies),
         path.join("temp", "noobTemp", "bazaar", "servicies.json")
       );
-      Object.getOwnPropertyNames(servicies).forEach(async (name) => {
-        const repo = servicies[name];
-        const repoMeta = await (
-          await fetch(
-            `https://raw.githubusercontent.com/${repo}/master/service.json`
-          )
-        ).json();
-        let needUpdate = true;
-        const tempPackagePath = path.join(
-          "temp",
-          "noobTemp",
-          "bazaar",
-          "packages",
-          "servicies",
-          `${name}`
-        );
-        if (
-          await 思源工作空间.exists(path.join(tempPackagePath, "service.json"))
-        ) {
-          let currentMeta = JSON.parse(
-            await 思源工作空间.readFile(tempPackagePath + "/service.json")
-          );
-          if (currentMeta.version === repoMeta.version) {
-            needUpdate = false;
-          }
-        }
-        if (needUpdate) {
-          console.log(`集市包${name}需要重新拉取:`);
+      await this.遍历并更新服务列表(servicies);
 
-          const releasePath = `https://api.github.com/repos/${repo}/releases/latest`;
-          const releaseMeta = await (await fetch(releasePath)).json();
-          const packagePath = releaseMeta.assets.find((asset) => {
-            return asset.name == "package.zip";
-          });
-          let blob = await (
-            await fetch(packagePath.browser_download_url)
-          ).blob();
-          let file = new File([blob], name, {
-            lastModified: Date.now(),
-          });
 
-          const tempPackageZipPath = tempPackagePath + ".zip";
-          if (await 思源工作空间.exists(tempPackagePath)) {
-            console.log("正在删除旧集市包:", tempPackagePath);
-
-            await 思源工作空间.removeFile(tempPackagePath);
-          }
-          await 思源工作空间.writeFile(file, tempPackageZipPath);
-          const compression = this.requireDep("compressing");
-          setTimeout(() => {
-            compression.zip.uncompress(
-              path.join(siyuan.config.system.workspaceDir, tempPackageZipPath),
-              path.join(siyuan.config.system.workspaceDir, tempPackagePath),
-              { zipFileNameEncoding: "GBK" }
-            );
-          }, 1000);
-        }
-      });
     }
     setTimeout(this.部署集市列表, 1000 * 60 * 60);
+  }
+  遍历并更新服务列表(servicies) {
+    Object.getOwnPropertyNames(servicies).forEach(async (name) => {
+      const repo = servicies[name];
+      const repoMeta = await (
+        await fetch(
+          `https://raw.githubusercontent.com/${repo}/master/service.json`
+        )
+      ).json();
+      let needUpdate = true;
+      const tempPackagePath = path.join(
+        "temp",
+        "noobTemp",
+        "bazaar",
+        "packages",
+        "servicies",
+        `${name}`
+      );
+      if (
+        await 思源工作空间.exists(path.join(tempPackagePath, "service.json"))
+      ) {
+        let currentMeta = JSON.parse(
+          await 思源工作空间.readFile(tempPackagePath + "/service.json")
+        );
+        if (currentMeta.version === repoMeta.version) {
+          needUpdate = false;
+        }
+      }
+      if (needUpdate) {
+        console.log(`集市包${name}需要重新拉取:`);
+
+        const releasePath = `https://api.github.com/repos/${repo}/releases/latest`;
+        const releaseMeta = await (await fetch(releasePath)).json();
+        const packagePath = releaseMeta.assets.find((asset) => {
+          return asset.name == "package.zip";
+        });
+        let blob = await (
+          await fetch(packagePath.browser_download_url)
+        ).blob();
+        let file = new File([blob], name, {
+          lastModified: Date.now(),
+        });
+
+        const tempPackageZipPath = tempPackagePath + ".zip";
+        if (await 思源工作空间.exists(tempPackagePath)) {
+          console.log("正在删除旧集市包:", tempPackagePath);
+
+          await 思源工作空间.removeFile(tempPackagePath);
+        }
+        await 思源工作空间.writeFile(file, tempPackageZipPath);
+        const compression = this.requireDep("compressing");
+        setTimeout(() => {
+          compression.zip.uncompress(
+            path.join(siyuan.config.system.workspaceDir, tempPackageZipPath),
+            path.join(siyuan.config.system.workspaceDir, tempPackagePath),
+            { zipFileNameEncoding: "GBK" }
+          );
+        }, 1000);
+      }
+    });
   }
   requireDep(id) {
     return window.require(path.join(this.依赖路径, id));
@@ -384,7 +389,7 @@ class noobService extends Plugin {
               )
             );
             list.push(json);
-          } catch (e) {}
+          } catch (e) { }
         }
         res.json({ servicies: list });
       });
@@ -509,7 +514,7 @@ class noobService extends Plugin {
     await serviceWindow.New(options);
     await 代理服务(服务文件项.name);
   }
-  async 安装服务() {}
+  async 安装服务() { }
 }
 module.exports = noobService;
 
